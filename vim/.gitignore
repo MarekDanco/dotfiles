@@ -1,0 +1,17 @@
+# Ignore swap files
+*.swp
+*.swo
+*.swn
+
+# Ignore undo/backup files
+*.un~
+*.bak
+*.orig
+
+# Ignore netrw history
+.netrwhist
+
+# Ignore temporary or session files
+Session.vim
+tags
+
