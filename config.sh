@@ -33,4 +33,9 @@ ln -s "$HOME/dotfiles/bash/.bashrc" "$HOME/.bashrc"
 ln -s "$HOME/dotfiles/bash/.bash_aliases" "$HOME/.bash_aliases"
 echo "Bash configured."
 
+# Git
+backup_and_remove "$HOME/.gitconfig"
+ln -s "$HOME/dotfiles/git/.gitconfig" "$HOME/.gitconfig"
+echo "Git configured."
+
 echo "All dotfiles set up successfully!"
