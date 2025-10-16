@@ -1,4 +1,7 @@
+filetype plugin indent on
 syntax enable
+let maplocalleader = "\\"
+let mapleader = "\\"
 set nocompatible
 set showcmd
 set hidden
