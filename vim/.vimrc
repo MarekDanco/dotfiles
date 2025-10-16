@@ -1,7 +1,5 @@
 filetype plugin indent on
 syntax enable
-let maplocalleader = "\\"
-let mapleader = "\\"
 set nocompatible
 set showcmd
 set hidden
@@ -14,5 +12,5 @@ set ignorecase
 set smartcase
 set background=dark
 let g:gruvbox_contrast_light = 'soft'
-let g:gruvbox_contrast_dark = 'soft'
+let g:gruvbox_contrast_dark = 'dark'
 colorscheme gruvbox
