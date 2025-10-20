@@ -1,40 +1,39 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Setting up dotfiles"
+echo "setting up dotfiles"
 
 backup_and_remove() {
     local target="$1"
     if [ -e "$target" ] || [ -L "$target" ]; then
-        local backup="${target}.bak_$(date +%Y%m%d%H%M%S)"
-        echo "Backing up $target to $backup"
+        local backup="${target}_ancient"
+        echo "backing up $target to $backup"
         mv "$target" "$backup"
     fi
 }
-
-# vim
-backup_and_remove "$HOME/.vimrc"
-backup_and_remove "$HOME/.vim"
-ln -s "$HOME/dotfiles/vim/.vimrc" "$HOME/.vimrc"
-ln -s "$HOME/dotfiles/vim/.vim" "$HOME/.vim"
-echo "Vim configured."
 
 # kitty
 backup_and_remove "$HOME/.config/kitty"
 mkdir -p "$HOME/.config"
 ln -s "$HOME/dotfiles/kitty" "$HOME/.config/kitty"
-echo "Kitty configured."
+echo "kitty configured"
+
+# nvim
+backup_and_remove "$HOME/.config/nvim"
+mkdir -p "$HOME/.config"
+ln -s "$HOME/dotfiles/nvim" "$HOME/.config/nvim"
+echo "nvim configured"
 
 # bash
 backup_and_remove "$HOME/.bashrc"
 backup_and_remove "$HOME/.bash_aliases"
 ln -s "$HOME/dotfiles/bash/.bashrc" "$HOME/.bashrc"
 ln -s "$HOME/dotfiles/bash/.bash_aliases" "$HOME/.bash_aliases"
-echo "Bash configured."
+echo "bash configured"
 
 # git
 backup_and_remove "$HOME/.gitconfig"
 ln -s "$HOME/dotfiles/git/.gitconfig" "$HOME/.gitconfig"
-echo "Git configured."
+echo "git configured"
 
-echo "All dotfiles set up successfully!"
+echo "all dotfiles set up successfully!"
