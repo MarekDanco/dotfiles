@@ -32,7 +32,7 @@ vim.o.confirm = true
 
 vim.opt.spell = false
 vim.opt.spelllang = 'en_us'
-vim.keymap.set('n', '<leader>tc', '<cmd>set spell!<cr>', { desc = 'Toggle Spell [C]heck' })
+vim.keymap.set('n', '<leader>ts', '<cmd>set spell!<cr>', { desc = '[T]oggle [S]pell Check' })
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -145,6 +145,14 @@ require('lazy').setup({
     },
     config = function()
       require('telescope').setup {
+        defaults = {
+          border = true,
+          borderchars = {
+            prompt = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+            results = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+            preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+          },
+        },
         extensions = {
           ['ui-select'] = {
             require('telescope.themes').get_dropdown(),
@@ -283,7 +291,7 @@ require('lazy').setup({
 
       vim.diagnostic.config {
         severity_sort = true,
-        float = { border = 'rounded', source = 'if_many' },
+        float = { border = 'single', source = 'if_many' },
         underline = { severity = vim.diagnostic.severity.ERROR },
         signs = vim.g.have_nerd_font and {
           text = {
@@ -422,7 +430,7 @@ require('lazy').setup({
     },
   },
 
-  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = {} },
 
   {
     'echasnovski/mini.nvim',
