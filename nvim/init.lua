@@ -30,10 +30,6 @@ vim.o.cursorline = true
 vim.o.scrolloff = 5
 vim.o.confirm = true
 
-vim.opt.spell = false
-vim.opt.spelllang = 'en_us'
-vim.keymap.set('n', '<leader>ts', '<cmd>set spell!<cr>', { desc = '[T]oggle [S]pell Check' })
-
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -294,7 +290,7 @@ require('lazy').setup({
           },
         } or {},
         virtual_text = {
-          source = 'if_many',
+          source = true,
           spacing = 2,
           format = function(diagnostic)
             local diagnostic_message = {
