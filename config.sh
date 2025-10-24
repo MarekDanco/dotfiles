@@ -1,39 +1,61 @@
 #!/usr/bin/env bash
 set -e
 
-echo "setting up dotfiles"
+DOTFILES_DIR="$HOME/.dotfiles"
 
-backup_and_remove() {
-    local target="$1"
-    if [ -e "$target" ] || [ -L "$target" ]; then
-        local backup="${target}_ancient"
-        echo "backing up $target to $backup"
-        mv "$target" "$backup"
+if [ ! -d "$DOTFILES_DIR" ]; then
+    echo "Error: $DOTFILES_DIR does not exist"
+    exit 1
+fi
+
+echo "Setting up dotfiles from $DOTFILES_DIR"
+
+link_dotfile() {
+    local src="$1"
+    local dest="$2"
+
+    if [ -L "$dest" ] && [ "$(readlink "$dest")" == "$src" ]; then
+        echo "$dest already correctly linked"
+        return
     fi
+
+    if [ -e "$dest" ] || [ -L "$dest" ]; then
+        local backup="${dest}_ancient"
+        echo "Backing up $dest to $backup"
+        mv "$dest" "$backup"
+    fi
+
+    ln -s "$src" "$dest"
+    echo "$(basename "$dest") configured"
 }
 
-# kitty
-backup_and_remove "$HOME/.config/kitty"
-mkdir -p "$HOME/.config"
-ln -s "$HOME/dotfiles/kitty" "$HOME/.config/kitty"
-echo "kitty configured"
+APPS=("kitty" "nvim" "bash" "git")
 
-# nvim
-backup_and_remove "$HOME/.config/nvim"
-mkdir -p "$HOME/.config"
-ln -s "$HOME/dotfiles/nvim" "$HOME/.config/nvim"
-echo "nvim configured"
+if [ "$#" -gt 0 ]; then
+    APPS=("$@")
+fi
 
-# bash
-backup_and_remove "$HOME/.bashrc"
-backup_and_remove "$HOME/.bash_aliases"
-ln -s "$HOME/dotfiles/bash/.bashrc" "$HOME/.bashrc"
-ln -s "$HOME/dotfiles/bash/.bash_aliases" "$HOME/.bash_aliases"
-echo "bash configured"
+for app in "${APPS[@]}"; do
+    case "$app" in
+        kitty)
+            mkdir -p "$HOME/.config"
+            link_dotfile "$DOTFILES_DIR/kitty" "$HOME/.config/kitty"
+            ;;
+        nvim)
+            mkdir -p "$HOME/.config"
+            link_dotfile "$DOTFILES_DIR/nvim" "$HOME/.config/nvim"
+            ;;
+        bash)
+            link_dotfile "$DOTFILES_DIR/bash/.bashrc" "$HOME/.bashrc"
+            link_dotfile "$DOTFILES_DIR/bash/.bash_aliases" "$HOME/.bash_aliases"
+            ;;
+        git)
+            link_dotfile "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
+            ;;
+        *)
+            echo "Warning: unknown app '$app', skipping."
+            ;;
+    esac
+done
 
-# git
-backup_and_remove "$HOME/.gitconfig"
-ln -s "$HOME/dotfiles/git/.gitconfig" "$HOME/.gitconfig"
-echo "git configured"
-
-echo "all dotfiles set up successfully!"
+echo "All requested dotfiles configured successfully!"
