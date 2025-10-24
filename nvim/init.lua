@@ -309,17 +309,22 @@ require('lazy').setup({
       local capabilities = require('blink.cmp').get_lsp_capabilities()
 
       local servers = {
-        clangd = {},
+        -- python
         pyright = {},
-        lua_ls = {
-          settings = {
-            Lua = {
-              completion = {
-                callSnippet = 'Replace',
-              },
-            },
-          },
-        },
+        black = {},
+        isort = {},
+        pylint = {},
+        -- tex
+        texlab = {},
+        latexindent = {},
+        ltex_plus = {},
+        ['bibtex-tidy'] = {},
+        -- c
+        clangd = {},
+        ['clang-format'] = {},
+        -- lua
+        lua_ls = {},
+        stylua = {},
       }
 
       local ensure_installed = vim.tbl_keys(servers or {})
@@ -405,7 +410,7 @@ require('lazy').setup({
         nerd_font_variant = 'mono',
       },
       completion = {
-        documentation = { auto_show = false, auto_show_delay_ms = 500 },
+        documentation = { auto_show = true, auto_show_delay_ms = 1000 },
       },
       sources = {
         default = { 'lsp', 'path', 'snippets', 'lazydev' },
@@ -458,7 +463,7 @@ require('lazy').setup({
 
             local location = statusline.section_location {}
             return statusline.combine_groups {
-              { hl = 'ministatuslinemodenormal', strings = { mode } },
+              { hl = 'ministatuslinemodevisual', strings = { mode } },
               { hl = 'ministatuslinedevinfo', strings = { git, diag } },
               '%<',
               { hl = 'ministatuslinefileinfo', strings = { filename } },
