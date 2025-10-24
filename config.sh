@@ -14,6 +14,11 @@ link_dotfile() {
     local src="$1"
     local dest="$2"
 
+    if [ ! -e "$src" ]; then
+        echo "Warning: source $src does not exist"
+        return
+    fi
+
     if [ -L "$dest" ] && [ "$(readlink "$dest")" == "$src" ]; then
         echo "$dest already correctly linked"
         return
@@ -53,9 +58,9 @@ for app in "${APPS[@]}"; do
             link_dotfile "$DOTFILES_DIR/git/.gitconfig" "$HOME/.gitconfig"
             ;;
         *)
-            echo "Warning: unknown app '$app', skipping."
+            echo "Warning: unknown app '$app'"
             ;;
     esac
 done
 
-echo "All requested dotfiles configured successfully!"
+echo "All dotfiles configured successfully!"
