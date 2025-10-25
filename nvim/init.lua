@@ -1,6 +1,7 @@
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
+vim.o.termguicolors = true
 
 vim.o.number = false
 vim.o.relativenumber = true
@@ -29,6 +30,10 @@ vim.o.inccommand = 'split'
 vim.o.cursorline = true
 vim.o.scrolloff = 5
 vim.o.confirm = true
+
+vim.keymap.set('n', '<leader>tg', function()
+  vim.o.background = vim.o.background == 'dark' and 'light' or 'dark'
+end, { desc = 'Toggle back[g]round dark/light' })
 
 vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -459,7 +464,7 @@ require('lazy').setup({
 
             local location = statusline.section_location {}
             return statusline.combine_groups {
-              { hl = 'ministatuslinemodevisual', strings = { mode } },
+              { hl = 'ministatuslinemodeinsert', strings = { mode } },
               { hl = 'ministatuslinedevinfo', strings = { git, diag } },
               '%<',
               { hl = 'ministatuslinefileinfo', strings = { filename } },

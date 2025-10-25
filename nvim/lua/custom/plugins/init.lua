@@ -16,17 +16,13 @@ return {
     ft = 'smt2',
   },
   {
-    'loctvl842/monokai-pro.nvim',
-    -- priority = 1000,
-    -- config = function()
-    --   vim.cmd 'colorscheme monokai-pro-spectrum'
-    -- end,
-  },
-  {
-    'vague-theme/vague.nvim',
+    'sainnhe/everforest',
+    lazy = false,
     priority = 1000,
     config = function()
-      vim.cmd 'colorscheme vague'
+      vim.g.everforest_enable_italic = true
+      vim.g.everforest_background = 'hard'
+      vim.cmd.colorscheme 'everforest'
     end,
   },
 }
