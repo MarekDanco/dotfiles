@@ -142,12 +142,8 @@ require('lazy').setup({
     config = function()
       require('telescope').setup {
         defaults = {
-          border = true,
-          borderchars = {
-            prompt = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-            results = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-            preview = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
-          },
+          borderchars = { '─', '│', '─', '│', '┌', '┐', '┘', '└' },
+          path_displays = { 'smart' },
         },
         extensions = {
           ['ui-select'] = {
